@@ -5,6 +5,12 @@ in Hadoop map/reduce applications.  Includes a demo application to spit out
 table information from the command-line via table name search or
 by the table's location in HDFS.
 
+Installation
+
+gem install hivemeta
+
+Usage
+
 streaming map/reduce code snippet:
 
 require 'hivemeta'
@@ -23,7 +29,6 @@ STDIN.each_line do |line|
   count   = row.inv_cnt.to_i
   puts "#{item_id}\t#{count}" if count >= 1000
 end
-
 
 sample usage for the demo app:
 
