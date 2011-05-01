@@ -1,0 +1,71 @@
+hivemeta
+
+A ruby API for access to the Hive metastore.  Useful for querying columns
+in map/reduce applications.  Includes a demo application to spit out
+table information from the command-line via table name search or
+by the table's location in HDFS.
+
+streaming map/reduce code snippet:
+
+require 'hivemeta'
+
+h = HiveMeta::Connection.new(...) # see sample-mapper.rb for detail
+inventory = h.table 'sample_inventory'
+
+STDIN.each_line do |line|
+  begin
+    row = inv_table.process_row line
+  rescue HiveMeta::FieldCountError
+    STDERR.puts "reporter:counter:bad_data:row_size,1"
+    next
+  end
+  item_id = row.item_id # can access by method or [:sym] or ['str']
+  count   = row.inv_cnt.to_i
+  puts "#{item_id}\t#{count}" if count >= 1000
+end
+
+
+sample usage for the demo app:
+
+# query by table names
+$ hivemeta_query.rb join_test_name
+join_test_name
+hdfs://namenode/tmp/join_test_name
+0   userid             # userid
+1   name               # username
+
+# query by table name wildcards
+$ hivemeta_query.rb join_test%
+join_test_address
+hdfs://namenode/tmp/join_test_address
+0   userid             # uid
+1   address
+2   city
+3   state
+
+join_test_name
+hdfs://namenode/tmp/join_test_name
+0   userid             # userid
+1   name               # username
+
+# list the tables using /tmp in HDFS
+$ hivemeta_query -l /tmp
+join_test_address
+join_test_work
+my_test_table
+
+# view usage information
+$ hivemeta_query.rb -h
+usage: ./hivemeta_query.rb [options] table_name|hdfs_path
+  -h, --help
+  -c, --comments       # display comments along with field detail (default)
+  -C, --no-comments    # do not display comments with the field detail
+  -l, --list-tables    # list matching tables but no detail
+  -f, --list-file-path # list the table HDFS file locations
+  -w, --fit-width      # fit the text to the width of the screen (default)
+  -W, --no-fit-width   # do not fit the text to the width of the screen
+  -u, --db-user=arg    # hive metastore db user (requires read access)
+  -p, --db-pass=arg    # hive metastore db password
+  -H, --db-host=arg    # host running the hive meta db (default: localhost)
+  -d, --db-name=arg    # hive meta db name (default: hivemeta)
+
