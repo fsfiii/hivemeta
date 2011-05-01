@@ -1,7 +1,7 @@
 hivemeta
 
 A ruby API for access to the Hive metastore.  Useful for querying columns
-in map/reduce applications.  Includes a demo application to spit out
+in Hadoop map/reduce applications.  Includes a demo application to spit out
 table information from the command-line via table name search or
 by the table's location in HDFS.
 

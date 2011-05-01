@@ -1,5 +1,5 @@
 README
-Rakefile
+CHANGELOG
 examples/hivemeta_query.rb
 examples/hivemeta_testrec.rb
 examples/sample-mapper.rb
@@ -7,4 +7,3 @@ lib/hivemeta.rb
 lib/hivemeta/connection.rb
 lib/hivemeta/record.rb
 lib/hivemeta/table.rb
-Manifest
