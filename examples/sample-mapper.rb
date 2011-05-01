@@ -13,7 +13,7 @@ db_name    = 'hivemeta'
 dbi_string = "DBI:Mysql:#{db_name}:#{db_host}"
 h = HiveMeta::Connection.new(dbi_string, db_user, db_pass)
 
-inventory = h.table 'sample_inventory'
+inv_table = h.table 'sample_inventory'
 
 STDIN.each_line do |line|
   begin

@@ -10,7 +10,7 @@ streaming map/reduce code snippet:
 require 'hivemeta'
 
 h = HiveMeta::Connection.new(...) # see sample-mapper.rb for detail
-inventory = h.table 'sample_inventory'
+inv_table = h.table 'sample_inventory'
 
 STDIN.each_line do |line|
   begin
