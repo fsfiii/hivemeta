@@ -37,6 +37,7 @@ sample usage for the demo app:
 $ hivemeta_query.rb join_test_name
 join_test_name
 hdfs://namenode/tmp/join_test_name
+delimiter: "\t" (ASCII 9)
 0   userid             # userid
 1   name               # username
 
@@ -44,6 +45,7 @@ hdfs://namenode/tmp/join_test_name
 $ hivemeta_query.rb join_test%
 join_test_address
 hdfs://namenode/tmp/join_test_address
+delimiter: "," (ASCII 44)
 0   userid             # uid
 1   address
 2   city
@@ -51,6 +53,7 @@ hdfs://namenode/tmp/join_test_address
 
 join_test_name
 hdfs://namenode/tmp/join_test_name
+delimiter: "\t" (ASCII 9)
 0   userid             # userid
 1   name               # username
 
