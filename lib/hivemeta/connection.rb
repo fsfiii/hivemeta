@@ -64,11 +64,10 @@ module HiveMeta
 #p name
         table = Table.new(name)
 
-        sql = "select c.INTEGER_IDX, c.column_name, c.COMMENT, s.LOCATION,
-          sp.PARAM_VALUE
-          from TBLS t, COLUMNS c, SDS s, SERDE_PARAMS sp
+        sql = "select c.INTEGER_IDX, c.column_name, c.COMMENT,
+          s.LOCATION, s.SD_ID
+          from TBLS t, COLUMNS c, SDS s
           where t.SD_ID = c.SD_ID and t.SD_ID = s.SD_ID
-          and sp.SERDE_ID = s.SD_ID and sp.PARAM_KEY = 'field.delim'
           and t.TBL_NAME = ?"
         query sql, name do |rec|
 #puts "REC:"
@@ -77,12 +76,22 @@ module HiveMeta
           col_name = rec[1]
           col_cmt  = rec[2]
           tbl_loc  = rec[3]
-          delim    = rec[4]
+          sd_id    = rec[4]
           table.columns[col_idx]  = col_name
           table.comments[col_idx] = col_cmt
           table.path      = tbl_loc
-          table.delimiter = delim
+
         end
+
+        sql = "select sp.PARAM_VALUE
+          from SERDE_PARAMS sp, TBLS t
+          where t.SD_ID = sp.SERDE_ID
+          and PARAM_KEY = 'field.delim'
+        and t.TBL_NAME = ?"
+        sd_rec = query sql, name
+        table.delimiter = sd_rec[0] if sd_rec[0]
+#puts "#{name}: found delim '#{table.delimiter}'" if sd_rec[0]
+#puts "#{name}: no delim" if not sd_rec[0]
 
         tables << table
       end
