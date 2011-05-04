@@ -88,10 +88,12 @@ module HiveMeta
           where t.SD_ID = sp.SERDE_ID
           and PARAM_KEY = 'field.delim'
         and t.TBL_NAME = ?"
-        sd_rec = query sql, name
-        table.delimiter = sd_rec[0] if sd_rec[0]
-#puts "#{name}: found delim '#{table.delimiter}'" if sd_rec[0]
-#puts "#{name}: no delim" if not sd_rec[0]
+        results = query sql, name
+        if results and results[0] and results[0][0]
+          table.delimiter = results[0][0]
+        end
+#puts "#{name}: found delim '#{table.delimiter}'" if results[0]
+#puts "#{name}: no delim" if not results[0]
 
         tables << table
       end

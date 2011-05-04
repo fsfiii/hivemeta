@@ -100,6 +100,15 @@ tables.each do |table|
   next if list_tables
   puts table.path
   next if list_paths
+
+  delim = table.delimiter
+  a = table.delimiter.ord
+  delim = '\\t' if a == 9
+  if (1..7).include? a
+    delim = "^#{('A'.ord + a - 1).chr}"
+  end
+  puts "delimiter: \"#{delim}\" (ASCII #{a})"
+
   tput_cols = `tput cols`.chomp.to_i rescue tput_cols = 0
 
   table.each_with_index do |col_name, i|

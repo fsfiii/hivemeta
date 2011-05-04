@@ -1,5 +1,6 @@
 * 2011-05-04 - fsf
 - pull delimiter from SERDE_PARAMS and only default to \t
+- hivemeta_query displays delimiter info
 - removed unused Rakefile
 
 * 2011-05-01 - fsf
