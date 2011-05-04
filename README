@@ -2,15 +2,46 @@ hivemeta
 
 A ruby API for access to a Hive metastore running under MySQL.
 
-Useful for querying columns in Hadoop map/reduce applications.  Includes
-a demo application to spit out table information from the command-line
-via table name search or by the table's location in HDFS.
+Useful for querying columns in Hadoop map/reduce applications.  Normally,
+a developer needs to handle both the splitting of incoming data and the
+assignment of numerically indexed fields to friendly variables like so:
+
+fields = line.chomp.split /\t/
+item_id = fields[0]
+inv_cnt = fields[7].to_i
+puts "#{item_id}\t#{inv_cnt}"
+
+This is not overly traumatic, however it's susceptible to errors creeping
+in from file format changes.  Ongoing maintenance can easily become a burden
+if there are many map/reduce programs reading the same changed data files.
+Code size increases as the column count increases.
+
+With hivemeta, the process is streamlined.  That same task is now:
+
+row = inv_table.process_row line
+puts "#{row.item_id}\t#{row.inv_cnt}"
+
+The row object automagically knows its column names and they can be
+referenced in one of the following ways (in order of best to worst
+performance and coolness):
+
+row.col_name
+row[:col_name]
+row['col_name']
+
+Also included is a demo application, hivemeta_query.rb, to spit out table
+information from the command-line via table name search or by the table's
+location in HDFS.
+
+---
 
 Installation
 
 gem install hivemeta
 
-Usage
+---
+
+API Usage
 
 streaming map/reduce code snippet:
 
@@ -31,7 +62,9 @@ STDIN.each_line do |line|
   puts "#{item_id}\t#{count}" if count >= 1000
 end
 
-sample usage for the demo app:
+---
+
+hivemeta_query.rb Usage
 
 # query by table names
 $ hivemeta_query.rb join_test_name
