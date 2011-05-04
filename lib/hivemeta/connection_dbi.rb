@@ -64,12 +64,9 @@ module HiveMeta
 #p name
         table = Table.new(name)
 
-        sql = "select c.INTEGER_IDX, c.column_name, c.COMMENT, s.LOCATION,
-          sp.PARAM_VALUE
-          from TBLS t, COLUMNS c, SDS s, SERDE_PARAMS sp
-          where t.SD_ID = c.SD_ID and t.SD_ID = s.SD_ID
-          and sp.SERDE_ID = s.SD_ID and sp.PARAM_KEY = 'field.delim'
-          and t.TBL_NAME = ?"
+        sql = "select c.INTEGER_IDX, c.column_name, c.COMMENT, s.LOCATION
+          from TBLS t, COLUMNS c, SDS s
+          where t.SD_ID = c.SD_ID and t.SD_ID = s.SD_ID and t.TBL_NAME = ?"
         query sql, name do |rec|
 #puts "REC:"
 #p rec
@@ -77,11 +74,9 @@ module HiveMeta
           col_name = rec[1]
           col_cmt  = rec[2]
           tbl_loc  = rec[3]
-          delim    = rec[4]
           table.columns[col_idx]  = col_name
           table.comments[col_idx] = col_cmt
-          table.path      = tbl_loc
-          table.delimiter = delim
+          table.path = tbl_loc
         end
 
         tables << table
