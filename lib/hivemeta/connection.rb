@@ -80,7 +80,6 @@ module HiveMeta
           table.columns[col_idx]  = col_name
           table.comments[col_idx] = col_cmt
           table.path      = tbl_loc
-
         end
 
         sql = "select sp.PARAM_VALUE
