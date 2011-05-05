@@ -19,7 +19,7 @@ Code size increases as the column count increases.
 With hivemeta, the process is streamlined.  That same task is now:
 
 row = inv_table.process_row line
-puts "#{row.item_id}\t#{row.inv_cnt}"
+puts "#{row.item_id}\t#{row.inv_cnt.to_i}"
 
 The row object automagically knows its column names and they can be
 referenced in one of the following ways (in order of best to worst
