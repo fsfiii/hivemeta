@@ -1,3 +1,6 @@
+* 2011-05-17 - fsf
+- bugfix: default unspecified delimiter is ^A rather than TAB
+
 * 2011-05-04 - fsf
 - pull delimiter from SERDE_PARAMS and only default to \t
 - hivemeta_query displays delimiter info
