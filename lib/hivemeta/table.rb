@@ -11,7 +11,7 @@ module HiveMeta
       @path = nil
       @columns   = []
       @comments  = []
-      @delimiter = "\t"
+      @delimiter = "\001"
     end
 
     def to_s
