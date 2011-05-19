@@ -77,8 +77,9 @@ module HiveMeta
           col_cmt  = rec[2]
           tbl_loc  = rec[3]
           sd_id    = rec[4]
-          table.columns[col_idx]  = col_name
-          table.comments[col_idx] = col_cmt
+          table.columns[col_idx]         = col_name
+          table.indexes[col_name.to_sym] = col_idx
+          table.comments[col_idx]        = col_cmt
           table.path      = tbl_loc
         end
 

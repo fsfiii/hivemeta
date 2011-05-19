@@ -9,10 +9,11 @@ module HiveMeta
         raise FieldCountError
       end
 
-      @columns = {}
-      table.each_col_with_index do |col_name, i|
-        @columns[col_name.to_sym] = @fields[i]
-      end
+      @table = table
+      #@columns = {}
+#      table.each_col_with_index do |col_name, i|
+#        #@columns[col_name.to_sym] = @fields[i]
+#      end
     end
 
     # allow for column access via column name as an index
@@ -22,13 +23,15 @@ module HiveMeta
     # example: rec[7]
     def [] index
       return "#{@fields[index]}" if index.is_a? Integer
-      "#{@columns[index.to_sym]}"
+      #"#{@columns[index.to_sym]}"
+      "#{@fields[@table.indexes[index.to_sym]]}"
     end
 
     # allow for column access via column name as a method
     # example: rec.col_name
     def method_missing(id, *args)
-      return @columns[id] if @columns[id]
+      return @fields[@table.indexes[id]] if @fields[@table.indexes[id]]
+      #return @columns[id] if @columns[id]
       raise NoMethodError
     end
   end

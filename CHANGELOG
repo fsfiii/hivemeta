@@ -1,5 +1,8 @@
 * 2011-05-19 - fsf
-- perf: remove unnecessary string indexed assignment - thanks ruby-prof!
+- thank you ruby-prof!
+- perf: 4x+ faster ... now basically on par with manual split into array
+- perf: create extra hash for column index by name
+- perf: remove unnecessary string indexed assignment
 - clean: table.each does each inside rather than each_with_index
 
 * 2011-05-17 - fsf

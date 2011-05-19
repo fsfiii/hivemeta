@@ -4,12 +4,13 @@ module HiveMeta
     include Comparable
     include Enumerable
 
-    attr_accessor :path, :columns, :comments, :delimiter
+    attr_accessor :path, :columns, :comments, :delimiter, :indexes
 
     def initialize(name)
       @name = name
       @path = nil
-      @columns   = []
+      @indexes   = {} # column indexes by name
+      @columns   = [] # column names by index
       @comments  = []
       @delimiter = "\001"
     end
