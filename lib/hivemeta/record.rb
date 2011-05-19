@@ -11,7 +11,6 @@ module HiveMeta
 
       @columns = {}
       table.each_col_with_index do |col_name, i|
-        @columns[col_name] = @fields[i]
         @columns[col_name.to_sym] = @fields[i]
       end
     end
