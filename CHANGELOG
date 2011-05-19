@@ -1,5 +1,6 @@
 * 2011-05-19 - fsf
 - perf: remove unnecessary string indexed assignment - thanks ruby-prof!
+- clean: table.each does each inside rather than each_with_index
 
 * 2011-05-17 - fsf
 - bugfix: default unspecified delimiter is ^A rather than TAB

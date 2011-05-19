@@ -19,7 +19,7 @@ module HiveMeta
     end
 
     def each
-      @columns.each_with_index do |column_name, index|
+      @columns.each do |column_name|
         yield column_name if column_name
       end
     end
