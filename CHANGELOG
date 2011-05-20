@@ -5,6 +5,8 @@
 - perf: remove unnecessary string indexed assignment
 - clean: Table#each does each inside rather than each_with_index
 - new: Table#process works on file input, by default STDIN
+- new: can now use environmental variables in order to minimize code
+       all prefixed by hivemeta_ : db_user, db_pass, db_host, db_name
 
 * 2011-05-17 - fsf
 - bugfix: default unspecified delimiter is ^A rather than TAB

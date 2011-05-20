@@ -47,7 +47,7 @@ streaming map/reduce code snippet (abstracted processing loop):
 
 require 'hivemeta'
 
-h = HiveMeta::Connection.new(...) # see sample-mapper.rb for detail
+h = HiveMeta::Connection.new # see below for detail
 
 h.table('sample_inventory').process do |row|
   item_id = row.item_id # can access by method or [:sym] or ['str']
@@ -59,7 +59,7 @@ streaming map/reduce code snippet (normal STDIN processing loop):
 
 require 'hivemeta'
 
-h = HiveMeta::Connection.new(...) # see sample-mapper.rb for detail
+h = HiveMeta::Connection.new # see below for detail
 inv_table = h.table 'sample_inventory'
 
 STDIN.each_line do |line|
@@ -73,6 +73,35 @@ STDIN.each_line do |line|
   count   = row.inv_cnt.to_i
   puts "#{item_id}\t#{count}" if count >= 1000
 end
+
+establishing a connection (in ruby code):
+
+db_user    = 'hive'
+db_pass    = 'hivepasshere'
+db_host    = 'localhost'
+db_name    = 'hivemeta'
+
+dbi_string = "DBI:Mysql:#{db_name}:#{db_host}"
+h = HiveMeta::Connection.new(dbi_string, db_user, db_pass)
+
+establishing a connection (environment variables):
+
+# when no arguments are passed, the following env variables will be used:
+#
+#  hivemeta_db_host
+#  hivemeta_db_name
+#  hivemeta_db_user
+#  hivemeta_db_pass
+#
+# to set these in a streaming map/reduce job, use -D arguments like so:
+#
+#  -D hivemeta.db_host=mydbhost \
+#  -D hivemeta.db_name=hivemeta \
+#  -D hivemeta.db_user=hive \
+#  -D hivemeta.db_pass=mydbpass \
+
+# the connection will made with those env variables without any other code
+h = HiveMeta::Connection.new
 
 ---
 

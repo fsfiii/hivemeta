@@ -6,6 +6,12 @@ module HiveMeta
 
   class Connection
     def initialize(dbi_string = nil, db_user = nil, db_pass = nil)
+      db_name = ENV['hivemeta_db_name']
+      db_host = ENV['hivemeta_db_host']
+      dbi_string ||= "DBI:Mysql:#{db_name}:#{db_host}"
+      db_user    ||= ENV['hivemeta_db_user']
+      db_pass    ||= ENV['hivemeta_db_pass']
+
       @dbi_string = dbi_string
       @db_user    = db_user
       @db_pass    = db_pass
