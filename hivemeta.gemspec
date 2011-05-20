@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = 'hivemeta'
   s.rubyforge_project = 'hivemeta'
-  s.version = '0.0.5'
+  s.version = '0.0.6'
   s.date = '2011-05-19'
   s.authors = ["Frank Fejes"]
   s.email = 'frank@fejes.net'

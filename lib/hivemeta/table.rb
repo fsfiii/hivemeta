@@ -49,6 +49,24 @@ module HiveMeta
         return Record.new(line, self)
       end
     end
+
+    # process all input (default to STDIN for Hadoop Streaming)
+    # via a provided block
+    def process(f = STDIN)
+      if not block_given?
+        return process_row f.readline
+      end
+
+      f.each_line do |line|
+        begin
+          process_row(line) {|row| yield row}
+        rescue HiveMeta::FieldCountError
+          warning ||= "reporter:counter:bad_data:row_size,1"
+          STDERR.puts warning
+          next
+        end
+      end
+    end
   end
 
 end

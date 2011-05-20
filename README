@@ -43,7 +43,19 @@ gem install hivemeta
 
 API Usage
 
-streaming map/reduce code snippet:
+streaming map/reduce code snippet (abstracted processing loop):
+
+require 'hivemeta'
+
+h = HiveMeta::Connection.new(...) # see sample-mapper.rb for detail
+
+h.table('sample_inventory').process do |row|
+  item_id = row.item_id # can access by method or [:sym] or ['str']
+  count   = row.inv_cnt.to_i
+  puts "#{item_id}\t#{count}" if count >= 1000
+end
+
+streaming map/reduce code snippet (normal STDIN processing loop):
 
 require 'hivemeta'
 

@@ -3,7 +3,8 @@
 - perf: 4x+ faster ... now basically on par with manual split into array
 - perf: create extra hash for column index by name
 - perf: remove unnecessary string indexed assignment
-- clean: table.each does each inside rather than each_with_index
+- clean: Table#each does each inside rather than each_with_index
+- new: Table#process works on file input, by default STDIN
 
 * 2011-05-17 - fsf
 - bugfix: default unspecified delimiter is ^A rather than TAB
