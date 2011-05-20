@@ -61,7 +61,7 @@ module HiveMeta
         begin
           process_row(line) {|row| yield row}
         rescue HiveMeta::FieldCountError
-          warning ||= "reporter:counter:bad_data:row_size,1"
+          warning ||= "reporter:counter:bad_data,row_size,1"
           STDERR.puts warning
           next
         end
