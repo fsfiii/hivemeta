@@ -52,7 +52,7 @@ module HiveMeta
 
     # process all input (default to STDIN for Hadoop Streaming)
     # via a provided block
-    def process(f = STDIN)
+    def process(f = STDIN, warning = nil)
       if not block_given?
         return process_row f.readline
       end
