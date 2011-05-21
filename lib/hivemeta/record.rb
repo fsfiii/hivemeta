@@ -3,17 +3,13 @@ module HiveMeta
   class FieldCountError < StandardError ; end
 
   class Record
-    def initialize(line, table)
+    def initialize(line, table, opts = {})
       @fields = line.chomp.split(table.delimiter, -1)
       if @fields.size != table.columns.size
-        raise FieldCountError
+        raise FieldCountError if not opts[:ignore_field_count]
       end
 
       @table = table
-      #@columns = {}
-#      table.each_col_with_index do |col_name, i|
-#        #@columns[col_name.to_sym] = @fields[i]
-#      end
     end
 
     # allow for column access via column name as an index
@@ -23,7 +19,6 @@ module HiveMeta
     # example: rec[7]
     def [] index
       return "#{@fields[index]}" if index.is_a? Integer
-      #"#{@columns[index.to_sym]}"
       "#{@fields[@table.indexes[index.to_sym]]}"
     end
 
@@ -31,7 +26,6 @@ module HiveMeta
     # example: rec.col_name
     def method_missing(id, *args)
       return @fields[@table.indexes[id]] if @fields[@table.indexes[id]]
-      #return @columns[id] if @columns[id]
       raise NoMethodError
     end
   end

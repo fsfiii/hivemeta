@@ -1,3 +1,7 @@
+* 2011-05-21 - fsf
+- new: added table.process* opts hash
+- new: added :ignore_field_count, :field_count_warning, and :file opts
+
 * 2011-05-19 - fsf
 - thank you ruby-prof!
 - perf: 4x+ faster ... now basically on par with manual split into array

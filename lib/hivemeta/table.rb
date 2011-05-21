@@ -41,27 +41,30 @@ module HiveMeta
 
     # process a row and return a record that can be queried
     # by column name in a variety of ways
-    def process_row(line)
+    def process_row(line, opts = {})
       return nil if not line
       if block_given?
-        yield Record.new(line, self)
+        yield Record.new(line, self, opts)
       else
-        return Record.new(line, self)
+        return Record.new(line, self, opts)
       end
     end
 
     # process all input (default to STDIN for Hadoop Streaming)
     # via a provided block
-    def process(f = STDIN, warning = nil)
+    def process(opts = {})
+      f = opts[:file] || STDIN
+
       if not block_given?
-        return process_row f.readline
+        return process_row(f.readline, opts)
       end
 
       f.each_line do |line|
         begin
-          process_row(line) {|row| yield row}
+          process_row(line, opts) {|row| yield row}
         rescue HiveMeta::FieldCountError
-          warning ||= "reporter:counter:bad_data,row_size,1"
+          warning = opts[:field_count_warning]
+          warning ||= "reporter:counter:HiveMeta,FieldCountError,1"
           STDERR.puts warning
           next
         end
