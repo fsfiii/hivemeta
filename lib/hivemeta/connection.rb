@@ -18,7 +18,7 @@ module HiveMeta
     end
 
     def query(sql, *args)
-      results = nil
+      dbh = results = nil
 
       # make a few attempts in the event that mysql has not been
       # configured with enough connections to handle many mappers
