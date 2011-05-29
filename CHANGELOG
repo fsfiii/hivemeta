@@ -1,3 +1,7 @@
+* 2011-05-29 - fsf
+- new: added retry logic to the db connection to account for mysql servers
+       with a relatively low max_connections setting
+
 * 2011-05-21 - fsf
 - new: added table.process* opts hash
 - new: added :ignore_field_count, :field_count_warning, and :file opts
