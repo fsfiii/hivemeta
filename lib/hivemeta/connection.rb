@@ -22,27 +22,23 @@ module HiveMeta
 
       # make a few attempts in the event that mysql has not been
       # configured with enough connections to handle many mappers
-      max_attempts = 3
-      1.upto(max_attempts) do |attempt|
-        begin
-          dbh = DBI.connect(@dbi_string, @db_user, @db_pass)
-          break
-        rescue DBI::DatabaseError => e
-          if attempt < max_attempts
-            attempt += 1
-            s = rand + 0.50
-            STDERR.puts "retrying hivemeta connection after %f seconds" % s
-            sleep s
-          else
-            STDERR.puts "cannot connect to metastore %s:\n  error (%s) %s" %
-              [@dbi_string, e.err, e.errstr]
-            raise
-          end
+      attempts, max_attempts = 0, 3
+      begin
+        dbh = DBI.connect(@dbi_string, @db_user, @db_pass)
+      rescue DBI::DatabaseError => e
+        attempts += 1
+        if attempts < max_attempts
+          s = rand + 0.50
+          STDERR.puts "retrying hivemeta connection after %f seconds..." % s
+          sleep s
+          retry
+        else
+          warn "cannot connect to metastore %s:\n  error %s\n  %s" %
+            [@dbi_string, e.err, e.errstr]
+          raise
         end
       end
 
-#puts "sql: #{sql}"
-#puts "args: #{args}"
       sth = dbh.prepare(sql)
       sth.execute(*args)
       if block_given?

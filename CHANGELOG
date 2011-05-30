@@ -1,3 +1,6 @@
+* 2011-05-30 - fsf
+- clean: switched dbi connection loop to an exception retry block
+
 * 2011-05-29 - fsf
 - new: added retry logic to the db connection to account for mysql servers
        with a relatively low max_connections setting
