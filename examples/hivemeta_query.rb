@@ -72,8 +72,7 @@ opts.each do |opt, arg|
       exit
   end end
 
-dbi_string = "DBI:Mysql:#{db_name}:#{db_host}"
-h = HiveMeta::Connection.new(dbi_string, db_user, db_pass)
+h = HiveMeta::Connection.new(db_name, db_host, db_user, db_pass)
 
 tables = []
 max_col_width = 8

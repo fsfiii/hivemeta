@@ -1,3 +1,8 @@
+* 2011-07-06 - fsf
+- new: added introductory jruby/jdbc support
+- change: HiveMeta::Connection.initialize takes 4 optional arguments now
+          and builds the dbi/jdbc string itself
+
 * 2011-05-30 - fsf
 - clean: switched dbi connection loop to an exception retry block
 
