@@ -12,6 +12,15 @@ module HiveMeta
       @table = table
     end
 
+    # avoid collisions with column name 'count'
+    # ugly :(
+    def _count
+      @fields.count
+    end
+
+    alias :_size :_count
+    alias :_length :_count
+
     # allow for column access via column name as an index
     # example: rec[:col_name]
     #      or: rec['col_name']
@@ -25,7 +34,8 @@ module HiveMeta
     # allow for column access via column name as a method
     # example: rec.col_name
     def method_missing(id, *args)
-      return @fields[@table.indexes[id]] if @fields[@table.indexes[id]]
+      return @fields[@table.indexes[id]]
+    rescue
       raise NoMethodError
     end
   end
