@@ -12,7 +12,7 @@ module HiveMeta
       @table = table
     end
 
-    # avoid collisions with column name 'count'
+    # avoid collisions with possible column names
     # ugly :(
     def _count
       @fields.count
@@ -20,6 +20,10 @@ module HiveMeta
 
     alias :_size :_count
     alias :_length :_count
+
+    def _fields
+      @fields
+    end
 
     # allow for column access via column name as an index
     # example: rec[:col_name]

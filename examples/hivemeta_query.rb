@@ -101,12 +101,16 @@ tables.each do |table|
   next if list_paths
 
   delim = table.delimiter
-  a = table.delimiter.ord
+  a = delim.ord if not delim.empty?
   delim = '\\t' if a == 9
   if (1..7).include? a
     delim = "^#{('A'.ord + a - 1).chr}"
   end
-  puts "delimiter: \"#{delim}\" (ASCII #{a})"
+  if delim.empty?
+    puts 'empty delimiter!?'
+  else
+    puts "delimiter: \"#{delim}\" (ASCII #{a})"
+  end
 
   tput_cols = `tput cols`.chomp.to_i rescue tput_cols = 0
 

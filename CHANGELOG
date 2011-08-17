@@ -1,6 +1,10 @@
+* 2011-08-17 - fsf
+- new: added _fields utility method for Record object
+
 * 2011-08-12 - fsf
 - new: added _count, _size, _length methods for row to read column count
 - fix: NoMethodError is properly raised if a bogus field is read
+- fix: hivemeta_query.rb example app handles empty delimiters
 
 * 2011-07-06 - fsf
 - new: added introductory jruby/jdbc support
